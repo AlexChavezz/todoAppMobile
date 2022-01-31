@@ -4,22 +4,29 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { rootStackParams } from '../navigation/StackNavigation';
+import { Todos } from './HomeComponent';
 
 interface ListItemProps {
     title:string, 
-    description: string
+    description: string,
+    id: string,
+    todos: Todos[]
+    setTodos: React.Dispatch<React.SetStateAction<Todos[]>>,
 }
 // -> Optimizing this whit rootStackParams + ListItemProps
 
 type authScreenProp = StackNavigationProp<rootStackParams, 'TodoScreen'>
 
-export const ListItem = ({ title, description }:ListItemProps) => {
+export const ListItem = ({ title, description, id, setTodos, todos,}:ListItemProps) => {
     const navigation = useNavigation<authScreenProp>();
     return (
         <TouchableOpacity style={ styles.itemContainer }
             onPress={ () => navigation.navigate('TodoScreen', {
                 title, 
                 description,
+                id,
+                setTodos,
+                todos
             })}
 >
             <Text style={ styles.itemText}>{ title }</Text>
@@ -32,7 +39,7 @@ const styles = StyleSheet.create({
     itemContainer:{
         width:100,
         height:100,
-        backgroundColor:'blue',
+        backgroundColor:'#C184FF',
         borderRadius:20,
         alignItems:'center',
         justifyContent:'center',

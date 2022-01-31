@@ -10,7 +10,7 @@ interface Props extends StackScreenProps<rootStackParams, 'Home'> { };
 export type Todos = {
     title: string,
     description: string,
-    id: string
+    id: string,
 }
 
 export const HomeComponent = ({ navigation }: Props) => {
@@ -22,7 +22,7 @@ export const HomeComponent = ({ navigation }: Props) => {
             <ScrollView style={{ backgroundColor: '#F8F9FB' }} >
                 <View style={styles.tasksContainer}>
                     {
-                        todos.map(todo => <ListItem {...todo} key={todo.id} />)
+                        todos.map(todo => <ListItem {...todo} key={todo.id} setTodos={setTodos} todos={todos} />)
                     }
                 </View>
             </ScrollView>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#181818',
         alignItems: 'center',
         borderTopWidth: 1,
-        borderColor: '#ccc'
+        borderColor: '#ccc',
     },
     buttonAdd: {
         height: 50,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 100,
-        marginVertical: 5
+        // marginVertical: -15,
     },
     buttonAddText: {
         color: 'white',
