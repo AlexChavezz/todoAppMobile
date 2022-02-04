@@ -10,14 +10,13 @@ interface ListItemProps {
     title:string, 
     description: string,
     id: string,
-    todos: Todos[]
-    setTodos: React.Dispatch<React.SetStateAction<Todos[]>>,
 }
+
 // -> Optimizing this whit rootStackParams + ListItemProps
 
 type authScreenProp = StackNavigationProp<rootStackParams, 'TodoScreen'>
 
-export const ListItem = ({ title, description, id, setTodos, todos,}:ListItemProps) => {
+export const ListItem = ({ title, description, id }:ListItemProps) => {
     const navigation = useNavigation<authScreenProp>();
     return (
         <TouchableOpacity style={ styles.itemContainer }
@@ -25,8 +24,6 @@ export const ListItem = ({ title, description, id, setTodos, todos,}:ListItemPro
                 title, 
                 description,
                 id,
-                setTodos,
-                todos
             })}
 >
             <Text style={ styles.itemText}>{ title }</Text>

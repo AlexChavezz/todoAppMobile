@@ -1,36 +1,35 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TodoState } from '../context/todoState/TodoState';
 import { rootStackParams } from '../navigation/StackNavigation';
 
 interface Props extends StackScreenProps<rootStackParams, 'TodoScreen'> { };
 
 export const TodoScreen = ({ navigation, route }: Props) => {
-    const { title, description, todos, setTodos, id } = route.params;
-    console.log(todos)
+    const { title, description, id } = route.params;
+
     useEffect(() => {
         navigation.setOptions({
+            title,
             headerTitleAlign: 'center'
         })
     }, [])
 
+    const { todos } = useContext( TodoState )
+
     const deleteTodo = () => {
-        setTodos(todos.filter(todo => todo.id !== id));
+        // new implementatition
+        // setTodos( todos.filter( todo => todo.id !== id))
         navigation.navigate('Home')
     }
 
     const editTodo = () => {
-
-        const todo = {
-            title,
-            description,
-            id
-        }
         navigation.navigate('AddNewTodo', {
-            setTodos, 
-            todos,
-            todo
+            title,
+            description, 
+            id
         })
     }
 
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 40,
-        width: 40,
+        width: 80,
         borderRadius: 10
     },
     deleteItem: {

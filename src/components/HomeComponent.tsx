@@ -1,7 +1,8 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TodoState } from '../context/todoState/TodoState';
 import { rootStackParams } from '../navigation/StackNavigation';
 import { ListItem } from './ListItem';
 
@@ -13,26 +14,31 @@ export type Todos = {
     id: string,
 }
 
-export const HomeComponent = ({ navigation }: Props) => {
+export const HomeComponent = ({ navigation, route }: Props) => {
 
-    const [todos, setTodos] = useState<Todos[]>([]);
+    const { todos } = useContext( TodoState );
+    console.log(todos)
+    useEffect(()=>{
+    navigation.setOptions({
+        title: "Todo List",
+        headerTitleStyle: {
+        }
+    })
+    }, [])
 
     return (
         <View style={styles.container}>
             <ScrollView style={{ backgroundColor: '#F8F9FB' }} >
                 <View style={styles.tasksContainer}>
                     {
-                        todos.map(todo => <ListItem {...todo} key={todo.id} setTodos={setTodos} todos={todos} />)
+                        todos.map( todo => <ListItem {...todo} key={todo.id} />)
                     }
                 </View>
             </ScrollView>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.buttonAdd}
-                    onPress={() => navigation.navigate('AddNewTodo', {
-                        setTodos,
-                        todos,
-                    })}
+                    onPress={() => navigation.navigate('AddNewTodo', {})}
                 >
                     <Text style={styles.buttonAddText}>
                         +
@@ -50,17 +56,17 @@ const styles = StyleSheet.create({
     buttonContainer: {
         // backgroundColor: '#181818',
         alignItems: 'center',
-        borderTopWidth: 1,
-        borderColor: '#ccc',
+        // borderTopWidth: 1,
+        // borderColor: '#ccc',
     },
     buttonAdd: {
         height: 50,
         width: 50,
-        backgroundColor: 'purple',
+        backgroundColor: '#C184FF',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 100,
-        // marginVertical: -15,
+        marginVertical: 5,
     },
     buttonAddText: {
         color: 'white',

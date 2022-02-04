@@ -10,8 +10,8 @@ LogBox.ignoreLogs([
 
 export type rootStackParams = {
     Home: undefined,
-    AddNewTodo: {setTodos: React.Dispatch<React.SetStateAction<Todos[]>>, todos: Todos[], todo?:Todos | null },
-    TodoScreen: { title: string, description: string, id: string,  setTodos: React.Dispatch<React.SetStateAction<Todos[]>>, todos: Todos[]}
+    AddNewTodo: { title?:string, description?: string, id?: string | null},
+    TodoScreen: { title: string, description: string, id: string }
 }
 
 const Stack = createStackNavigator<rootStackParams>();
